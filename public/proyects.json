@@ -1,0 +1,53 @@
+{
+  "projects": [
+    {
+      "name": "GetaPro",
+      "images": [
+        "/images/getapro-1.png",
+        "/images/getapro-2.png",
+        "/images/getapro-3.png"
+      ],
+      "overview": "Gestor profesional de proyectos de investigación académica multidisciplinaria para el Colegio Humanista Abraham Maslow. Diseñado para solucionar problemas reales de desorganización en equipos académicos y mejorar la calidad de la redacción de los entregables.",
+      "problem": "En la institución existía una falta de organización entre equipos, procesos poco claros y entregables mal estructurados. Los alumnos no tenían un sistema unificado para redactar, colaborar o entregar sus capítulos del proyecto, lo que generaba confusión y baja calidad en los trabajos finales.",
+      "solution": "GetaPro ofrece una plataforma institucional hecha a la medida, con autenticación interna basada en usuarios manuales y claves escolares. El dashboard se adapta según el rol del usuario: los alumnos ven su proyecto asignado, mientras que los asesores pueden ver los proyectos que supervisan. Cada proyecto contiene un overview general y capítulos organizados según el método escolar: problema, antecedentes, metodología y conclusiones. Cada capítulo es editable mediante un editor tipo Notion creado con TipTap, permitiendo herramientas avanzadas de edición para mejorar la calidad de los entregables.",
+      "impact": "La institución obtuvo una herramienta intuitiva que estandarizó el flujo de trabajo, mejoró la claridad de los entregables, ordenó la colaboración entre alumnos y asesores, y brindó un método estructurado para redactar investigaciones académicas.",
+      "challenges": "El mayofr reto fue la arquitectura inicial. Originalmente se había implementado un login con OAuth2.0 y Google, pero por políticas institucionales tuvo que migrarse a una base de datos interna con usuarios manuales. Además, fue necesario diseñar un sistema modular de capítulos y un editor robusto basado en TipTap.",
+      "learnings": "Este proyecto representó mi primera experiencia a gran escala usando Next.js, donde aprendí a manejar rutas, optimización del rendimiento, Supabase como backend, autenticación personalizada y uso avanzado de hooks. También adquirí experiencia estructurando aplicaciones tipo SaaS y organizando datos jerárquicos para proyectos colaborativos.",
+      "technologies": ["Next.js", "Tailwind", "Supabase", "TipTap", "Auth", "Full-Stack"],
+      "links": {
+        "repo": "#",
+        "demo": "#"
+      }
+    },
+    {
+      "name": "BeeGreat",
+      "images": [
+        "/images/getapro-1.png",
+        "/images/getapro-2.png",
+        "/images/getapro-3.png"
+      ],
+      "overview": "BeeGreat es una herramienta educativa desarrollada para entrenar deletreo en inglés. Usa Next.js y Tailwind, junto con la Speech API para reproducir palabras y pronunciación letra por letra. Obtiene datos desde una API externa y permite navegar entre categorías, estudiar palabras y practicar pronunciación. Fue creado como proyecto personal y terminó siendo una solución útil y pulida para estudiantes.",
+      "problem": "",
+      "technologies": ["Next.js", "Tailwind", "Framer Motion", "Speech API"]
+    },
+    {
+      "name": "WTranscriber",
+      "images": [
+        "/images/wtranscriber-1.png",
+        "/images/wtranscriber-2.png",
+        "/images/wtranscriber-3.png"
+      ],
+      "overview": "WTranscriber es un SaaS gratuito para transcribir audio utilizando Whisper de OpenAI. Ofrece edición avanzada mediante un editor tipo Notion construido con TipTap, así como opciones para exportar el texto transcrito a formatos .docx y .txt.",
+      "problem": "La necesidad surgió de transcribir audios constantemente para tareas escolares y asuntos personales. Las opciones existentes eran lentas, limitadas o de pago, por lo que era necesario crear una herramienta rápida, accesible y minimalista para realizar transcripciones sin complicaciones.",
+      "solution": "La primera versión fue desarrollada con React + Vite y desplegada en Netlify. Permitía subir un archivo, generar la transcripción en una subpágina y copiar o descargar el resultado. El backend usaba Python y alojaba la API de Whisper en un servidor lento y antiguo. En la versión actual, el proyecto fue reconstruido desde cero usando Next.js y desplegado en Vercel, incorporando un código más limpio, hooks, un editor enriquecido con TipTap y mejoras significativas en SEO. La herramienta ahora permite editar la transcripción dentro de la app, exportarla a diferentes formatos y próximamente contará con funciones adicionales mediante autenticación OAuth.",
+      "impact": "La nueva versión ofrece transcripciones más rápidas, una interfaz más intuitiva y un sistema de edición integrado que hace que el flujo completo sea mucho más eficiente. La herramienta pasó de ser un proyecto de práctica a un mini SaaS funcional que puede ser usado por estudiantes, creadores de contenido y profesionales.",
+      "challenges": "El mayor reto fue la migración desde la arquitectura anterior: pasar de un backend Python lento a una implementación moderna en Next.js, reorganizar la estructura interna del proyecto, mejorar el rendimiento de las llamadas a Whisper y construir un editor robusto con TipTap sin comprometer la simplicidad del SaaS.",
+      "learnings": "Este proyecto consolidó habilidades en Next.js, manejo de hooks, optimización de SEO, integración de APIs de IA y construcción de interfaces complejas con TipTap. También reforzó conocimientos en diseño de flujos SaaS, autenticación OAuth2.0 y arquitectura orientada a producto.",
+      "technologies": ["Next.js", "Tailwind", "Whisper API", "TipTap", "OAuth2.0", "AI Tools"],
+      "links": {
+        "repo": "#",
+        "demo": "#"
+      }
+    }
+  ]
+}
