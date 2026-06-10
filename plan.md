@@ -17,7 +17,7 @@ We will blend the **Industrial** (Option A) and **Midnight/Minimalist** (Option 
 ### Phase 1: Core Design System Update
 - [ ] Update `globals.css` with the new color variables.
 - [ ] Refactor `tailwind.config.ts` to map these colors to utility classes (`bg-surface`, `text-accent`, etc.).
-- [ ] Remove all hardcoded colors and `[color:var(...)]` strings in favor of these Tailwind classes.
+- [ ] Remove all hardcoded colors and `[color:var(--example)]` strings in favor of these Tailwind classes.
 
 ### Phase 2: Component Refinement
 - [ ] **`card.tsx`**: 

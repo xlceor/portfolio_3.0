@@ -9,7 +9,7 @@ export default function GradientSvgIcon({
 }) {
   return (
     <Icon
-      className={`${className} text-[var(--accent)] opacity-[0.92] transition-opacity hover:opacity-100`}
+      className={`${className} text-accent opacity-90 transition-opacity hover:opacity-100`}
       aria-hidden
     />
   );
