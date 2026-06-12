@@ -1,22 +1,51 @@
 @import "tailwindcss";
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
-    background-color: #ffffff;
-    color: #1a1a1a;
-    font-family: 'Outfit', sans-serif;
+    background-color: #F9FAFB;
+    color: #0A0A0A;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
 @layer utilities {
-  .font-display { font-family: 'Cormorant Garamond', serif; }
-  .font-mono    { font-family: 'DM Mono', monospace; }
+  .font-display {
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
   
   .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    color: #0D9488;
+  }
+
+  .tech-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 999px;
+    color: #6B7280;
+  }
+
+  /* Pulse animation for hero eyebrow */
+  @keyframes eyebrow-pulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.8); }
+    50%       { opacity: 1;   transform: scale(1.2); }
+  }
+
+  .animate-pulse-eyebrow {
+    animation: eyebrow-pulse 2s ease-in-out infinite;
   }
 }
