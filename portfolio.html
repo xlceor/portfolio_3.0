@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Carlos Osorio — Systems Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #F9FAFB;
+    --surface:   #FFFFFF;
+    --border:    #E5E7EB;
+    --border-med:#D1D5DB;
+    --text-1:    #0A0A0A;
+    --text-2:    #374151;
+    --text-3:    #6B7280;
+    --text-4:    #9CA3AF;
+    --teal:      #0D9488;
+    --teal-light:#F0FDFA;
+    --teal-mid:  #CCFBF1;
+    --emerald:   #059669;
+    --emerald-light: #ECFDF5;
+    --red:       #DC2626;
+    --font:      'DM Sans', system-ui, sans-serif;
+    --mono:      'JetBrains Mono', monospace;
+    --r-sm:      6px;
+    --r-md:      10px;
+    --r-lg:      16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text-1);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Typography ── */
+  h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+  h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
+  p  { font-size: 1rem; line-height: 1.75; color: var(--text-2); }
+  a  { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Layout ── */
+  .container { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+  .section    { padding: 96px 0; }
+  .section + .section { border-top: 1px solid var(--border); }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(249,250,251,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: 60px;
+  }
+  .nav-inner {
+    max-width: 780px; margin: 0 auto; padding: 0 24px;
+    height: 100%; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-size: 0.95rem; font-weight: 600; color: var(--text-1);
+    background: none; border: none; cursor: pointer; font-family: var(--font);
+  }
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-link {
+    font-size: 0.875rem; font-weight: 400; color: var(--text-3);
+    background: none; border: none; cursor: pointer; font-family: var(--font);
+    padding: 6px 10px; border-radius: var(--r-sm);
+    transition: color 0.15s, background 0.15s;
+  }
+  .nav-link:hover { color: var(--text-1); background: var(--border); }
+  .nav-controls { display: flex; align-items: center; gap: 8px; }
+  .lang-toggle {
+    display: flex; border: 1px solid var(--border); border-radius: var(--r-sm); overflow: hidden;
+  }
+  .lang-btn {
+    font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+    padding: 5px 10px; background: none; border: none; cursor: pointer;
+    color: var(--text-3); transition: all 0.15s;
+  }
+  .lang-btn.active { background: var(--text-1); color: white; }
+  .btn-cv {
+    font-size: 0.85rem; font-weight: 500; padding: 7px 16px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-sm); cursor: pointer; color: var(--text-2);
+    font-family: var(--font); transition: all 0.15s;
+  }
+  .btn-cv:hover { border-color: var(--teal); color: var(--teal); }
+  .mobile-menu-btn {
+    display: none; background: none; border: 1px solid var(--border);
+    border-radius: var(--r-sm); padding: 6px 10px; cursor: pointer;
+    color: var(--text-2); font-size: 0.8rem; font-family: var(--font);
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .mobile-menu-btn { display: block; }
+  }
+  .mobile-menu {
+    position: fixed; top: 60px; left: 0; right: 0; z-index: 99;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 12px 24px; display: flex; flex-direction: column; gap: 4px;
+  }
+  .mobile-menu .nav-link { text-align: left; width: 100%; }
+
+  /* ── Hero ── */
+  .hero { padding: 120px 0 80px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.8rem; font-weight: 500; color: var(--teal);
+    letter-spacing: 0.04em; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-eyebrow-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--emerald);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.8); }
+    50%       { opacity: 1;   transform: scale(1.2); }
+  }
+  .hero h1 { margin-bottom: 20px; }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--text-3); margin-bottom: 36px; max-width: 520px;
+  }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn-primary {
+    font-size: 0.9rem; font-weight: 500; padding: 10px 22px;
+    background: var(--text-1); color: white; border: none;
+    border-radius: var(--r-sm); cursor: pointer; font-family: var(--font);
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    font-size: 0.9rem; font-weight: 500; padding: 10px 22px;
+    background: var(--surface); color: var(--text-2);
+    border: 1px solid var(--border); border-radius: var(--r-sm);
+    cursor: pointer; font-family: var(--font); transition: all 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* ── What I do ── */
+  .capabilities-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+    border-radius: var(--r-lg); overflow: hidden; margin-top: 48px;
+  }
+  @media (max-width: 560px) { .capabilities-grid { grid-template-columns: 1fr; } }
+  .cap-item {
+    background: var(--surface); padding: 28px 28px 28px 28px;
+    transition: background 0.15s;
+  }
+  .cap-item:hover { background: #FAFFFE; }
+  .cap-icon { font-size: 1.25rem; margin-bottom: 14px; }
+  .cap-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--text-1); }
+  .cap-desc  { font-size: 0.875rem; color: var(--text-3); line-height: 1.6; }
+
+  /* ── Section header ── */
+  .section-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--teal); margin-bottom: 12px;
+  }
+
+  /* ── Featured project (case study) ── */
+  .featured-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-lg); overflow: hidden; margin-top: 48px;
+  }
+  .featured-header {
+    padding: 32px 32px 0;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap;
+  }
+  .featured-badge {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--emerald);
+    background: var(--emerald-light); border: 1px solid var(--teal-mid);
+    padding: 4px 10px; border-radius: 999px;
+    white-space: nowrap;
+  }
+  .featured-title { font-size: 1.35rem; font-weight: 600; margin-top: 12px; margin-bottom: 8px; }
+  .featured-desc  { font-size: 0.95rem; color: var(--text-3); max-width: 540px; line-height: 1.7; }
+  .featured-metrics {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    margin-top: 28px;
+  }
+  @media (max-width: 500px) { .featured-metrics { grid-template-columns: 1fr; } }
+  .metric-cell {
+    padding: 24px; border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .metric-cell:last-child { border-right: none; }
+  .metric-num {
+    font-family: var(--mono); font-size: 1.8rem; font-weight: 500;
+    color: var(--text-1); letter-spacing: -0.02em;
+  }
+  .metric-num span { color: var(--teal); }
+  .metric-label { font-size: 0.75rem; color: var(--text-3); margin-top: 4px; }
+  .case-study-body { padding: 28px 32px 32px; }
+  .cs-step {
+    display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start;
+  }
+  .cs-step:last-child { margin-bottom: 0; }
+  .cs-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--teal-light); color: var(--teal);
+    font-size: 0.75rem; font-weight: 600; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .cs-content h4  { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+  .cs-content p   { font-size: 0.875rem; color: var(--text-3); line-height: 1.6; }
+  .cs-quote {
+    background: var(--teal-light); border-left: 3px solid var(--teal);
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    padding: 16px 20px; margin-top: 24px;
+  }
+  .cs-quote p   { font-size: 0.9rem; font-style: italic; color: var(--text-2); }
+  .cs-quote cite { font-size: 0.8rem; color: var(--text-3); font-style: normal; margin-top: 6px; display: block; }
+  .cs-tech-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+    padding-top: 24px; border-top: 1px solid var(--border);
+  }
+  .tech-tag {
+    font-size: 0.75rem; font-weight: 500; padding: 4px 10px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 999px; color: var(--text-3);
+  }
+  .featured-card-footer {
+    padding: 16px 32px; background: var(--bg);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .btn-open-detail {
+    font-size: 0.85rem; font-weight: 500; color: var(--teal);
+    background: none; border: none; cursor: pointer; font-family: var(--font);
+    display: flex; align-items: center; gap: 4px;
+    padding: 0;
+  }
+  .btn-open-detail:hover { text-decoration: underline; }
+
+  /* ── Projects grid ── */
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
+  @media (max-width: 560px) { .projects-grid { grid-template-columns: 1fr; } }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-md); padding: 22px;
+    cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover { border-color: var(--teal); box-shadow: 0 2px 12px rgba(13,148,136,0.08); }
+  .project-card-tag {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--text-4); margin-bottom: 12px;
+  }
+  .project-card h3 { font-size: 0.95rem; margin-bottom: 8px; }
+  .project-card p  { font-size: 0.85rem; color: var(--text-3); line-height: 1.6; flex: 1; }
+  .project-card-footer {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px;
+    padding-top: 16px; border-top: 1px solid var(--border);
+  }
+
+  /* ── About ── */
+  .about-body p { margin-bottom: 20px; font-size: 0.975rem; }
+  .about-body p:last-child { margin-bottom: 0; }
+  .about-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .about-link {
+    font-size: 0.85rem; font-weight: 500; color: var(--text-2);
+    border: 1px solid var(--border); border-radius: var(--r-sm);
+    padding: 7px 14px; transition: all 0.15s; display: flex; align-items: center; gap: 6px;
+  }
+  .about-link:hover { border-color: var(--teal); color: var(--teal); text-decoration: none; }
+
+  /* ── Stack ── */
+  .stack-section { margin-top: 48px; display: flex; flex-direction: column; gap: 20px; }
+  .stack-group { }
+  .stack-group-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--text-3); margin-bottom: 12px;
+  }
+  .stack-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .stack-tag {
+    font-size: 0.8rem; font-weight: 400; color: var(--text-2);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-sm); padding: 5px 12px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .stack-tag:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* ── Contact ── */
+  .contact-inner { max-width: 540px; }
+  .contact-inner h2 { margin-bottom: 12px; }
+  .contact-inner > p { margin-bottom: 36px; }
+  .form-group { margin-bottom: 16px; }
+  .form-label {
+    display: block; font-size: 0.8rem; font-weight: 500; color: var(--text-2);
+    margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%; padding: 10px 14px; font-size: 0.9rem; font-family: var(--font);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-sm); color: var(--text-1); outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.12); }
+  textarea.form-input { resize: vertical; min-height: 120px; }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border); padding: 36px 0;
+    background: var(--surface);
+  }
+  .footer-inner {
+    max-width: 780px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-copy { font-size: 0.8rem; color: var(--text-4); }
+  .footer-links { display: flex; gap: 16px; }
+  .footer-link {
+    font-size: 0.8rem; color: var(--text-3); transition: color 0.15s;
+  }
+  .footer-link:hover { color: var(--teal); }
+  .terminal-easter {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--text-4);
+    cursor: pointer; transition: color 0.15s;
+  }
+  .terminal-easter:hover { color: var(--teal); }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,10,10,0.5); display: flex;
+    align-items: center; justify-content: center; padding: 24px;
+    backdrop-filter: blur(4px);
+  }
+  .modal-panel {
+    background: var(--surface); border-radius: var(--r-lg);
+    border: 1px solid var(--border); width: 100%; max-width: 580px;
+    max-height: 85vh; overflow-y: auto;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+    display: flex; flex-direction: column;
+  }
+  .modal-header {
+    padding: 24px 24px 0; display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .modal-close {
+    background: none; border: 1px solid var(--border); border-radius: var(--r-sm);
+    padding: 4px 8px; cursor: pointer; color: var(--text-3); font-size: 0.75rem;
+    font-family: var(--font); transition: all 0.15s; flex-shrink: 0;
+  }
+  .modal-close:hover { border-color: var(--text-1); color: var(--text-1); }
+  .modal-body { padding: 20px 24px 24px; }
+  .modal-tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-4); margin-bottom: 8px; }
+  .modal-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
+  .modal-desc { font-size: 0.9rem; color: var(--text-2); line-height: 1.7; margin-bottom: 20px; }
+  .modal-section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; }
+  .modal-features { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+  .modal-features li { font-size: 0.875rem; color: var(--text-2); display: flex; gap: 8px; align-items: flex-start; }
+  .modal-features li::before { content: "–"; color: var(--teal); flex-shrink: 0; }
+  .modal-impact {
+    background: var(--emerald-light); border: 1px solid var(--teal-mid);
+    border-radius: var(--r-sm); padding: 14px 16px; margin-bottom: 20px;
+    font-size: 0.875rem; color: var(--text-2); line-height: 1.6;
+  }
+  .modal-tech { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  /* ── Terminal panel (easter egg) ── */
+  .terminal-panel {
+    background: #0A0A0A; border-radius: var(--r-md);
+    padding: 16px; margin-top: 16px;
+    font-family: var(--mono); font-size: 0.75rem; color: #6EE7B7;
+    height: 160px; overflow-y: auto;
+    display: none;
+  }
+  .terminal-panel.visible { display: block; }
+  .terminal-log { margin-bottom: 4px; line-height: 1.5; }
+  .terminal-input-row {
+    display: flex; align-items: center; gap: 6px; margin-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;
+  }
+  .terminal-prompt { color: var(--teal); }
+  .terminal-input {
+    background: transparent; border: none; outline: none;
+    color: #F9FAFB; font-family: var(--mono); font-size: 0.75rem; flex: 1;
+  }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; z-index: 300;
+    font-size: 0.85rem; font-weight: 500;
+    padding: 12px 18px; border-radius: var(--r-sm);
+    border: 1px solid var(--border); background: var(--surface);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    display: flex; align-items: center; gap: 8px;
+    transform: translateY(0); animation: toastIn 0.2s ease;
+  }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .toast.success { border-color: var(--emerald); color: var(--emerald); }
+  .toast.error   { color: var(--red); border-color: var(--red); }
+
+  /* ── CV Modal ── */
+  .cv-modal {
+    background: var(--surface); border-radius: var(--r-lg);
+    border: 1px solid var(--border); padding: 32px;
+    max-width: 360px; width: 100%;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+  }
+  .cv-modal h3 { margin-bottom: 8px; }
+  .cv-modal p  { font-size: 0.875rem; color: var(--text-3); margin-bottom: 24px; }
+  .cv-options  { display: flex; flex-direction: column; gap: 10px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <div class="nav-inner">
+    <button class="nav-logo" onclick="scrollTo('hero')">Carlos Osorio</button>
+    <div class="nav-links" id="nav-links">
+      <button class="nav-link" onclick="scrollTo('projects')" id="nav-projects">Projects</button>
+      <button class="nav-link" onclick="scrollTo('about')" id="nav-about">About</button>
+      <button class="nav-link" onclick="scrollTo('contact')" id="nav-contact">Contact</button>
+    </div>
+    <div class="nav-controls">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="lang-en" onclick="setLocale('en')">EN</button>
+        <button class="lang-btn" id="lang-es" onclick="setLocale('es')">ES</button>
+      </div>
+      <button class="btn-cv" onclick="openCV()">CV</button>
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">Menu</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu" style="display:none;">
+  <button class="nav-link" onclick="scrollTo('projects');closeMobileMenu()">Projects</button>
+  <button class="nav-link" onclick="scrollTo('about');closeMobileMenu()">About</button>
+  <button class="nav-link" onclick="scrollTo('contact');closeMobileMenu()">Contact</button>
+</div>
+
+<!-- ── Hero ── -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      <span id="hero-eyebrow">Available for projects</span>
+    </div>
+    <h1 id="hero-title">I build systems<br>that work in the real world.</h1>
+    <p class="hero-sub" id="hero-sub">Full-stack developer and embedded systems builder. From web interfaces to ESP32 controllers — I connect software with physical reality.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="scrollTo('projects')" id="hero-cta-1">See my work</button>
+      <button class="btn-secondary" onclick="window.open('https://www.upwork.com/freelancers/~01093075254cf375b0','_blank')" id="hero-cta-2">Hire on Upwork</button>
+      <button class="btn-secondary" onclick="scrollTo('contact')" id="hero-cta-3">Get in touch</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── What I do ── -->
+<section class="section" id="what-i-do">
+  <div class="container">
+    <p class="section-label" id="label-capabilities">Capabilities</p>
+    <h2 id="capabilities-title">What I build</h2>
+    <div class="capabilities-grid">
+      <div class="cap-item">
+        <div class="cap-icon">⬡</div>
+        <div class="cap-title" id="cap1-title">Interactive interfaces</div>
+        <p class="cap-desc" id="cap1-desc">Web UIs that control real-world systems — dashboards, control panels, real-time telemetry.</p>
+      </div>
+      <div class="cap-item">
+        <div class="cap-icon">◎</div>
+        <div class="cap-title" id="cap2-title">Backend systems</div>
+        <p class="cap-desc" id="cap2-desc">APIs and services that process, decide, and respond — from REST endpoints to real-time communication.</p>
+      </div>
+      <div class="cap-item">
+        <div class="cap-icon">◈</div>
+        <div class="cap-title" id="cap3-title">Embedded systems</div>
+        <p class="cap-desc" id="cap3-desc">ESP32, Arduino, servo control, sensor integration. Hardware that talks to software.</p>
+      </div>
+      <div class="cap-item">
+        <div class="cap-icon">⬟</div>
+        <div class="cap-title" id="cap4-title">Automation tools</div>
+        <p class="cap-desc" id="cap4-desc">Python utilities and scripts that turn hours of manual work into seconds. Desktop apps that real people use daily.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Projects ── -->
+<section class="section" id="projects">
+  <div class="container">
+    <p class="section-label" id="label-projects">Selected work</p>
+    <h2 id="projects-title">Things I've built</h2>
+
+    <!-- Featured: Python app -->
+    <div class="featured-card">
+      <div class="featured-header">
+        <div>
+          <span class="featured-badge" id="featured-badge">Featured project</span>
+          <h3 class="featured-title" id="feat-title">File Reconciliation Tool</h3>
+          <p class="featured-desc" id="feat-desc">A professional desktop application that reconciles hundreds of invoices and reports against a master Excel — in under two seconds. Built for a real user, solving a real problem, saving real money.</p>
+        </div>
+      </div>
+      <div class="featured-metrics">
+        <div class="metric-cell">
+          <div class="metric-num"><span>$</span>230</div>
+          <div class="metric-label" id="metric1-label">saved per week</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num">&lt;<span>2</span>s</div>
+          <div class="metric-label" id="metric2-label">processing time</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num">1000<span>+</span></div>
+          <div class="metric-label" id="metric3-label">files handled</div>
+        </div>
+      </div>
+      <div class="case-study-body">
+        <div class="cs-step">
+          <div class="cs-num">1</div>
+          <div class="cs-content">
+            <h4 id="cs1-title">The problem</h4>
+            <p id="cs1-desc">My father manually reviewed 600–1,000 invoices against a master Excel, checking each file by hand to find what was missing. This took hours every week — time that cost real money for the business.</p>
+          </div>
+        </div>
+        <div class="cs-step">
+          <div class="cs-num">2</div>
+          <div class="cs-content">
+            <h4 id="cs2-title">The build</h4>
+            <p id="cs2-desc">I built a Python desktop app that reads a directory, compares filenames against the master Excel, and generates a detailed report: found, missing, and extra files. Then iterated it into a professional product — installer, auto-updater, license system, and a settings panel.</p>
+          </div>
+        </div>
+        <div class="cs-step">
+          <div class="cs-num">3</div>
+          <div class="cs-content">
+            <h4 id="cs3-title">The result</h4>
+            <p id="cs3-desc">A task that took hours now runs in under two seconds. The app is in daily use by real users in a real business context. Not a demo. Not a tutorial project. A tool that works.</p>
+          </div>
+        </div>
+        <blockquote class="cs-quote">
+          <p id="cs-quote-text">"Before this, I spent whole afternoons cross-referencing files manually. Now I run it once and I'm done."</p>
+          <cite id="cs-quote-attr">— The user. Also happens to be my dad.</cite>
+        </blockquote>
+        <div class="cs-tech-row">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Tkinter / CustomTkinter</span>
+          <span class="tech-tag">openpyxl</span>
+          <span class="tech-tag">PyInstaller</span>
+          <span class="tech-tag">License system</span>
+          <span class="tech-tag">Auto-updater</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other projects grid -->
+    <div class="projects-grid" style="margin-top:32px;">
+
+      <div class="project-card" onclick="openModal('khymera-dashboard')">
+        <div class="project-card-tag" id="tag-hw">Hardware · Web</div>
+        <h3 id="pc1-title">Khymera Dashboard</h3>
+        <p id="pc1-desc">Real-time control interface for a robotic gripper. SSE for live sensor data, HTTP commands to move servos. A direct bridge between browser and physical hardware.</p>
+        <div class="project-card-footer">
+          <span class="tech-tag">Next.js</span>
+          <span class="tech-tag">ESP32</span>
+          <span class="tech-tag">SSE</span>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openModal('khymera-gripper')">
+        <div class="project-card-tag" id="tag-robotics">Robotics · Embedded</div>
+        <h3 id="pc2-title">Khymera — Robotic Gripper</h3>
+        <p id="pc2-desc">A modular prosthetic-inspired gripper. 3D-printed PLA + TPU, servo-actuated four-bar linkage, all electronics enclosed inside the housing. No protoboard.</p>
+        <div class="project-card-footer">
+          <span class="tech-tag">ESP32</span>
+          <span class="tech-tag">3D Printing</span>
+          <span class="tech-tag">Servo control</span>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openModal('getapro')">
+        <div class="project-card-tag">SaaS · Full-stack</div>
+        <h3 id="pc3-title">GETAPRO</h3>
+        <p id="pc3-desc">Research and project management platform with role-aware workspaces, structured chapters, and a Notion-style editor. Built twice — once to ship it, once to do it right.</p>
+        <div class="project-card-footer">
+          <span class="tech-tag">Next.js</span>
+          <span class="tech-tag">Supabase</span>
+          <span class="tech-tag">TipTap</span>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openModal('jevil')">
+        <div class="project-card-tag" id="tag-testing">Testing · IoT</div>
+        <h3 id="pc4-title">Jevil — IoT Test System</h3>
+        <p id="pc4-desc">AI-powered testing for IoT applications. A software ESP32 simulator with five modes — ideal, adverse, frozen, and deliberately malicious — to stress-test my own dashboard.</p>
+        <div class="project-card-footer">
+          <span class="tech-tag">Playwright</span>
+          <span class="tech-tag">AI</span>
+          <span class="tech-tag">ESP32 sim</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section class="section" id="about">
+  <div class="container">
+    <p class="section-label" id="label-about">About</p>
+    <h2 id="about-title" style="margin-bottom:32px;">From wanting to build Iron Man's suit<br>to building things that actually work.</h2>
+    <div class="about-body">
+      <p id="about-p1">It started, honestly, with a YouTube video of an exoskeleton that used pneumatic cylinders. I was already watching Iron Man at the time, and my immediate thought was: <em>what if I built that — but better?</em> I started sketching in notebooks, learning about pneumatics, hydraulic artificial muscles, McKibben actuators. I didn't have components or a workshop. I had a laptop, an internet connection, and a problem I wanted to solve.</p>
+      <p id="about-p2">That year of chasing an impossible project taught me more than any curriculum. I took an electronics course. I learned embedded systems. I built a robotic gripper for my school's interdisciplinary project — all electronics enclosed inside the housing, custom soldered board, servo-actuated four-bar linkage. It worked during the presentation. More importantly, it stayed within budget. That's when I understood: constraints aren't the enemy of creativity. They're the point.</p>
+      <p id="about-p3">The self-balancing robot that won second place at the science fair, the hackathon where I was the only participant to integrate real embedded hardware with AI-based browser testing, the two iterations of a full-stack project management platform I built over two school years learning Next.js, Supabase, and TipTap from scratch — each one started as something that sounded almost impossible. That's still how I pick what to build.</p>
+      <p id="about-p4">Currently I work at the intersection of web development, embedded systems, and automation. Not because I planned a career path, but because those are the tools that let me build what I actually want to build.</p>
+    </div>
+    <div class="about-links">
+      <a href="https://github.com/xlceor" target="_blank" rel="noopener" class="about-link">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/carlos-osorio-a6967b2a6/" target="_blank" rel="noopener" class="about-link">LinkedIn ↗</a>
+      <a href="https://www.upwork.com/freelancers/~01093075254cf375b0" target="_blank" rel="noopener" class="about-link">Upwork ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stack ── -->
+<section class="section" id="stack">
+  <div class="container">
+    <p class="section-label" id="label-stack">Technical stack</p>
+    <h2 id="stack-title">Tools I work with</h2>
+    <div class="stack-section">
+      <div class="stack-group">
+        <div class="stack-group-label" id="stack-label-fe">Frontend</div>
+        <div class="stack-tags">
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">Next.js</span>
+          <span class="stack-tag">TypeScript</span>
+          <span class="stack-tag">Tailwind CSS</span>
+          <span class="stack-tag">HTML / CSS</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <div class="stack-group-label" id="stack-label-be">Backend</div>
+        <div class="stack-tags">
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Express</span>
+          <span class="stack-tag">Flask</span>
+          <span class="stack-tag">Supabase</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">SQLite</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <div class="stack-group-label" id="stack-label-embedded">Embedded &amp; Robotics</div>
+        <div class="stack-tags">
+          <span class="stack-tag">ESP32</span>
+          <span class="stack-tag">Arduino</span>
+          <span class="stack-tag">C / C++</span>
+          <span class="stack-tag">FreeRTOS</span>
+          <span class="stack-tag">PID control</span>
+          <span class="stack-tag">SSE</span>
+          <span class="stack-tag">I²C / SPI</span>
+          <span class="stack-tag">Servo control</span>
+          <span class="stack-tag">3D printing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <p class="section-label" id="label-contact">Contact</p>
+      <h2 id="contact-title">Let's work together.</h2>
+      <p id="contact-desc">If you're building something that involves real-world systems — hardware, software, or both — I want to hear about it.</p>
+      <form onsubmit="sendEmail(event)">
+        <div class="form-group">
+          <label class="form-label" id="form-name-label">Name</label>
+          <input type="text" name="user_name" class="form-input" required id="form-name-input" placeholder="" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="form-email-label">Email</label>
+          <input type="email" name="user_email" class="form-input" required id="form-email-input" placeholder="" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="form-msg-label">Message</label>
+          <textarea name="message" class="form-input" required id="form-msg-input" placeholder=""></textarea>
+        </div>
+        <button type="submit" class="btn-primary" id="submit-btn" style="width:100%;margin-top:4px;">Send message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2025 Carlos Osorio</span>
+    <span class="terminal-easter" onclick="toggleTerminal()" id="terminal-trigger">$ _</span>
+    <div class="footer-links">
+      <a href="https://github.com/xlceor" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+      <a href="https://www.linkedin.com/in/carlos-osorio-a6967b2a6/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+      <a href="https://www.instagram.com/xlceor/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+    </div>
+  </div>
+  <!-- Terminal easter egg -->
+  <div class="container">
+    <div class="terminal-panel" id="terminal-panel">
+      <div id="terminal-log"></div>
+      <form onsubmit="terminalSubmit(event)" class="terminal-input-row">
+        <span class="terminal-prompt">›</span>
+        <input type="text" class="terminal-input" id="terminal-input" placeholder='type "help"' autocomplete="off" />
+      </form>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Modals ── -->
+<div class="modal-overlay" id="modal-overlay" style="display:none;" onclick="closeModal()">
+  <div class="modal-panel" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-tag" id="modal-tag">Project</div>
+        <h3 class="modal-title" id="modal-title">Project title</h3>
+      </div>
+      <button class="modal-close" onclick="closeModal()" id="modal-close-btn">Close</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="modal-desc"></p>
+      <div id="modal-features-section">
+        <div class="modal-section-label" id="modal-feat-label">Highlights</div>
+        <ul class="modal-features" id="modal-features"></ul>
+      </div>
+      <div id="modal-impact-section" style="display:none;">
+        <div class="modal-section-label" id="modal-impact-label">Impact</div>
+        <div class="modal-impact" id="modal-impact"></div>
+      </div>
+      <div class="modal-section-label" id="modal-tech-label">Technologies</div>
+      <div class="modal-tech" id="modal-tech"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CV modal -->
+<div class="modal-overlay" id="cv-overlay" style="display:none;" onclick="closeCV()">
+  <div class="cv-modal" onclick="event.stopPropagation()">
+    <h3 id="cv-title">Download CV</h3>
+    <p id="cv-desc">Choose your preferred language.</p>
+    <div class="cv-options">
+      <a href="/CV_Ingles.pdf" target="_blank" class="btn-primary" style="text-align:center;display:block;" id="cv-en">English version</a>
+      <a href="/CV_Espanol.pdf" target="_blank" class="btn-secondary" style="text-align:center;display:block;" id="cv-es">Spanish version</a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast success" id="toast" style="display:none;"></div>
+
+<script>
+// ── Data ──
+const projectData = {
+  'khymera-dashboard': {
+    tag: { en: 'Hardware · Web', es: 'Hardware · Web' },
+    title: { en: 'Khymera Dashboard', es: 'Khymera Dashboard' },
+    desc: {
+      en: 'A real-time control and telemetry interface for physical robotic hardware. The user sends commands through a web dashboard; the ESP32 responds with live sensor data.',
+      es: 'Interfaz de control y telemetría en tiempo real para hardware robótico. El usuario envía comandos desde un dashboard web; el ESP32 responde con datos del sensor en vivo.'
+    },
+    features: {
+      en: ['Live sensor monitoring via SSE', 'Servo actuator control over HTTP', 'AI-assisted command execution', 'Voice interaction layer'],
+      es: ['Monitoreo de sensores en vivo via SSE', 'Control de servos por HTTP', 'Ejecución de comandos asistida por IA', 'Interacción por voz']
+    },
+    impact: {
+      en: 'A direct bridge between a browser interface and a physical robotic system — no intermediate servers, no unnecessary latency.',
+      es: 'Un puente directo entre una interfaz web y un sistema robótico físico — sin servidores intermedios, sin latencia innecesaria.'
+    },
+    tech: ['Next.js', 'SSE', 'ESP32', 'HTTP', 'Voice API', 'AI']
+  },
+  'khymera-gripper': {
+    tag: { en: 'Robotics · Embedded', es: 'Robótica · Embebido' },
+    title: { en: 'Khymera — Robotic Gripper', es: 'Khymera — Garra Robótica' },
+    desc: {
+      en: 'A modular robotic gripper designed as a low-cost prosthetic base. All electronics enclosed inside the 3D-printed housing. No protoboard — custom soldered perfboard for power distribution.',
+      es: 'Una garra robótica modular diseñada como base de prótesis de bajo costo. Toda la electrónica encapsulada dentro de la carcasa impresa en 3D. Sin protoboard — placa perforada soldada a mano.'
+    },
+    features: {
+      en: ['3D-printed PLA + TPU structure', 'Four-bar linkage mechanism', 'Servo-actuated with embedded ESP32 control', 'Custom soldered power board'],
+      es: ['Estructura impresa en 3D (PLA + TPU)', 'Mecanismo de cuatro barras', 'Servos actuados con control ESP32 embebido', 'Placa de alimentación soldada a mano']
+    },
+    impact: {
+      en: 'Demonstrated that a functional robotic actuation base for a prosthetic is achievable within a tight student budget. Presented and working at the school interdisciplinary final.',
+      es: 'Demostró que una base de actuación robótica funcional es viable con un presupuesto de estudiante. Funcionó en la presentación final interdisciplinaria.'
+    },
+    tech: ['ESP32', 'C++', '3D Printing', 'Servo control', 'Four-bar linkage']
+  },
+  'getapro': {
+    tag: { en: 'SaaS · Full-stack', es: 'SaaS · Full-stack' },
+    title: { en: 'GETAPRO', es: 'GETAPRO' },
+    desc: {
+      en: 'A project management platform built for academic and engineering teams. Role-aware workspaces, structured research chapters, Notion-style editing per section. Built twice — the second time knowing what I was building.',
+      es: 'Plataforma de gestión de proyectos para equipos académicos e ingeniería. Espacios con roles, capítulos de investigación estructurados, edición tipo Notion. Construida dos veces — la segunda vez sabiendo lo que construía.'
+    },
+    features: {
+      en: ['Role-based project spaces (student / advisor)', 'Structured chapter editor (TipTap)', 'Google auth + email/password login', 'AI assistant with project context access'],
+      es: ['Espacios con roles (alumno / asesor)', 'Editor de capítulos estructurado (TipTap)', 'Auth con Google + email/contraseña', 'Asistente IA con acceso al contexto del proyecto']
+    },
+    impact: {
+      en: 'Reduced tool fragmentation for students doing interdisciplinary projects. Built twice: first as a React app in grade 9, then rebuilt from scratch with Next.js, Supabase, and proper auth in grade 10.',
+      es: 'Reduce la fragmentación de herramientas para estudiantes en proyectos interdisciplinarios. Construida dos veces: primero en React en 3°, luego reescrita con Next.js, Supabase y auth real en 4°.'
+    },
+    tech: ['Next.js', 'React', 'Supabase', 'TipTap', 'TypeScript', 'Tailwind CSS']
+  },
+  'jevil': {
+    tag: { en: 'Testing · IoT', es: 'Testing · IoT' },
+    title: { en: 'Jevil — IoT Test System', es: 'Jevil — Sistema de Testing IoT' },
+    desc: {
+      en: 'An AI-powered testing system for IoT applications, built for a Hashnode hackathon. Combines Playwright browser automation with a software ESP32 simulator that emulates five different device states.',
+      es: 'Sistema de testing con IA para aplicaciones IoT, construido para un hackathon de Hashnode. Combina automatización con Playwright y un simulador de ESP32 con cinco modos de operación.'
+    },
+    features: {
+      en: ['ESP32 software simulator with 5 modes', 'Mode 4: malicious device (XSS injection via sensor)', 'AI-based semantic event detection (no CSS selectors needed)', 'Found real bugs in my own production dashboard'],
+      es: ['Simulador de ESP32 con 5 modos', 'Modo 4: dispositivo malicioso (inyección XSS via sensor)', 'Detección de eventos semántica con IA', 'Encontró errores reales en mi propio dashboard de producción']
+    },
+    impact: {
+      en: 'The only hackathon entry that integrated real embedded hardware simulation with AI-based browser testing. Found actual vulnerabilities — and was the most unique technical approach in the event.',
+      es: 'Única propuesta en el hackathon que integró simulación de hardware embebido con testing por IA. Encontró vulnerabilidades reales y fue el enfoque técnico más único del evento.'
+    },
+    tech: ['Playwright', 'AI / Passmark', 'Node.js', 'ESP32 simulation', 'SSE']
+  }
+};
+
+// ── Translations ──
+const t = {
+  en: {
+    'hero-eyebrow': 'Available for projects',
+    'hero-title': 'I build systems<br>that work in the real world.',
+    'hero-sub': 'Full-stack developer and embedded systems builder. From web interfaces to ESP32 controllers — I connect software with physical reality.',
+    'hero-cta-1': 'See my work',
+    'hero-cta-2': 'Hire on Upwork',
+    'hero-cta-3': 'Get in touch',
+    'label-capabilities': 'Capabilities',
+    'capabilities-title': 'What I build',
+    'cap1-title': 'Interactive interfaces',
+    'cap1-desc': 'Web UIs that control real-world systems — dashboards, control panels, real-time telemetry.',
+    'cap2-title': 'Backend systems',
+    'cap2-desc': 'APIs and services that process, decide, and respond — from REST endpoints to real-time communication.',
+    'cap3-title': 'Embedded systems',
+    'cap3-desc': 'ESP32, Arduino, servo control, sensor integration. Hardware that talks to software.',
+    'cap4-title': 'Automation tools',
+    'cap4-desc': 'Python utilities and scripts that turn hours of manual work into seconds. Desktop apps that real people use daily.',
+    'label-projects': 'Selected work',
+    'projects-title': 'Things I\'ve built',
+    'featured-badge': 'Featured project',
+    'feat-title': 'File Reconciliation Tool',
+    'feat-desc': 'A professional desktop application that reconciles hundreds of invoices and reports against a master Excel — in under two seconds. Built for a real user, solving a real problem, saving real money.',
+    'metric1-label': 'saved per week',
+    'metric2-label': 'processing time',
+    'metric3-label': 'files handled',
+    'cs1-title': 'The problem',
+    'cs1-desc': 'My father manually reviewed 600–1,000 invoices against a master Excel, checking each file by hand to find what was missing. This took hours every week — time that cost real money.',
+    'cs2-title': 'The build',
+    'cs2-desc': 'I built a Python desktop app that reads a directory, compares filenames against the master Excel, and generates a report: found, missing, and extra files. Iterated it into a professional product — installer, auto-updater, and a license system.',
+    'cs3-title': 'The result',
+    'cs3-desc': 'A task that took hours now runs in under two seconds. In daily use by real users in a real business context. Not a demo. A tool that works.',
+    'cs-quote-text': '"Before this, I spent whole afternoons cross-referencing files manually. Now I run it once and I\'m done."',
+    'cs-quote-attr': '— The user. Also happens to be my dad.',
+    'tag-hw': 'Hardware · Web',
+    'tag-robotics': 'Robotics · Embedded',
+    'tag-testing': 'Testing · IoT',
+    'pc1-title': 'Khymera Dashboard',
+    'pc1-desc': 'Real-time control interface for a robotic gripper. SSE for live sensor data, HTTP commands to move servos. A direct bridge between browser and physical hardware.',
+    'pc2-title': 'Khymera — Robotic Gripper',
+    'pc2-desc': 'A modular prosthetic-inspired gripper. 3D-printed PLA + TPU, servo-actuated four-bar linkage, all electronics enclosed inside the housing. No protoboard.',
+    'pc3-title': 'GETAPRO',
+    'pc3-desc': 'Research and project management platform with role-aware workspaces, structured chapters, and a Notion-style editor. Built twice — once to ship it, once to do it right.',
+    'pc4-title': 'Jevil — IoT Test System',
+    'pc4-desc': 'AI-powered testing for IoT applications. A software ESP32 simulator with five modes — ideal, adverse, frozen, and deliberately malicious — to stress-test my own dashboard.',
+    'label-about': 'About',
+    'about-title': 'From wanting to build Iron Man\'s suit<br>to building things that actually work.',
+    'about-p1': 'It started, honestly, with a YouTube video of an exoskeleton that used pneumatic cylinders. I was already watching Iron Man at the time, and my immediate thought was: <em>what if I built that — but better?</em> I started sketching in notebooks, learning about pneumatics, hydraulic artificial muscles, McKibben actuators. I didn\'t have components or a workshop. I had a laptop, an internet connection, and a problem I wanted to solve.',
+    'about-p2': 'That year of chasing an impossible project taught me more than any curriculum. I took an electronics course. I learned embedded systems. I built a robotic gripper for my school\'s interdisciplinary project — all electronics enclosed inside the housing, custom soldered board, servo-actuated four-bar linkage. It worked during the presentation. More importantly, it stayed within budget.',
+    'about-p3': 'The self-balancing robot that won second place at the science fair, the hackathon where I was the only participant to integrate real embedded hardware with AI-based browser testing, the two iterations of a full-stack project management platform I built over two school years — each one started as something that sounded almost impossible. That\'s still how I pick what to build.',
+    'about-p4': 'Currently I work at the intersection of web development, embedded systems, and automation. Not because I planned a career path, but because those are the tools that let me build what I actually want to build.',
+    'label-stack': 'Technical stack',
+    'stack-title': 'Tools I work with',
+    'stack-label-fe': 'Frontend',
+    'stack-label-be': 'Backend',
+    'stack-label-embedded': 'Embedded & Robotics',
+    'label-contact': 'Contact',
+    'contact-title': 'Let\'s work together.',
+    'contact-desc': 'If you\'re building something that involves real-world systems — hardware, software, or both — I want to hear about it.',
+    'form-name-label': 'Name',
+    'form-email-label': 'Email',
+    'form-msg-label': 'Message',
+    'submit-btn': 'Send message',
+    'modal-close-btn': 'Close',
+    'modal-feat-label': 'Highlights',
+    'modal-impact-label': 'Impact',
+    'modal-tech-label': 'Technologies',
+    'cv-title': 'Download CV',
+    'cv-desc': 'Choose your preferred language.',
+    'cv-en': 'English version',
+    'cv-es': 'Spanish version',
+    'nav-projects': 'Projects',
+    'nav-about': 'About',
+    'nav-contact': 'Contact',
+  },
+  es: {
+    'hero-eyebrow': 'Disponible para proyectos',
+    'hero-title': 'Construyo sistemas<br>que funcionan en el mundo real.',
+    'hero-sub': 'Desarrollador full-stack y constructor de sistemas embebidos. De interfaces web a controladores ESP32 — conecto software con realidad física.',
+    'hero-cta-1': 'Ver mi trabajo',
+    'hero-cta-2': 'Contratar en Upwork',
+    'hero-cta-3': 'Hablemos',
+    'label-capabilities': 'Capacidades',
+    'capabilities-title': 'Lo que construyo',
+    'cap1-title': 'Interfaces interactivas',
+    'cap1-desc': 'UIs web que controlan sistemas del mundo real — dashboards, paneles de control, telemetría en tiempo real.',
+    'cap2-title': 'Sistemas backend',
+    'cap2-desc': 'APIs y servicios que procesan, deciden y responden — desde endpoints REST hasta comunicación en tiempo real.',
+    'cap3-title': 'Sistemas embebidos',
+    'cap3-desc': 'ESP32, Arduino, control de servos, integración de sensores. Hardware que habla con software.',
+    'cap4-title': 'Herramientas de automatización',
+    'cap4-desc': 'Utilidades en Python que convierten horas de trabajo manual en segundos. Apps de escritorio que usuarios reales usan a diario.',
+    'label-projects': 'Trabajo seleccionado',
+    'projects-title': 'Cosas que he construido',
+    'featured-badge': 'Proyecto destacado',
+    'feat-title': 'Herramienta de Conciliación de Archivos',
+    'feat-desc': 'Aplicación de escritorio profesional que concilia cientos de facturas e informes contra un Excel maestro — en menos de dos segundos. Construida para un usuario real, resolviendo un problema real, ahorrando dinero real.',
+    'metric1-label': 'ahorrados por semana',
+    'metric2-label': 'tiempo de procesamiento',
+    'metric3-label': 'archivos procesados',
+    'cs1-title': 'El problema',
+    'cs1-desc': 'Mi papá revisaba manualmente 600 a 1,000 facturas contra un Excel maestro, archivo por archivo. Esto tomaba horas semanales — tiempo que le costaba dinero real al negocio.',
+    'cs2-title': 'La construcción',
+    'cs2-desc': 'Construí una app de escritorio en Python que lee un directorio, compara nombres de archivo contra el Excel maestro y genera un reporte: encontrados, faltantes y sobrantes. Lo iteré hasta convertirlo en producto profesional — instalador, actualizador automático y sistema de licencias.',
+    'cs3-title': 'El resultado',
+    'cs3-desc': 'Una tarea que tomaba horas ahora corre en menos de dos segundos. En uso diario por usuarios reales en un contexto de negocio real. No es una demo. Es una herramienta que funciona.',
+    'cs-quote-text': '"Antes pasaba tardes enteras revisando archivos manualmente. Ahora lo corro una vez y listo."',
+    'cs-quote-attr': '— El usuario. También es mi papá.',
+    'tag-hw': 'Hardware · Web',
+    'tag-robotics': 'Robótica · Embebido',
+    'tag-testing': 'Testing · IoT',
+    'pc1-title': 'Khymera Dashboard',
+    'pc1-desc': 'Interfaz de control en tiempo real para una garra robótica. SSE para datos de sensores en vivo, comandos HTTP para mover servos. Un puente directo entre el navegador y hardware físico.',
+    'pc2-title': 'Khymera — Garra Robótica',
+    'pc2-desc': 'Una garra modular inspirada en prótesis. PLA + TPU impreso en 3D, mecanismo de cuatro barras actuado por servos, toda la electrónica encapsulada dentro de la carcasa. Sin protoboard.',
+    'pc3-title': 'GETAPRO',
+    'pc3-desc': 'Plataforma de gestión de proyectos de investigación con espacios por roles, capítulos estructurados y editor tipo Notion. Construida dos veces — una para entregarla, otra para hacerla bien.',
+    'pc4-title': 'Jevil — Sistema de Testing IoT',
+    'pc4-desc': 'Testing con IA para aplicaciones IoT. Un simulador de ESP32 con cinco modos — ideal, adverso, datos congelados, y deliberadamente malicioso — para probar mi propio dashboard.',
+    'label-about': 'Sobre mí',
+    'about-title': 'De querer construir la armadura de Iron Man<br>a construir cosas que de verdad funcionan.',
+    'about-p1': 'Empezó, honestamente, con un video de YouTube de un exoesqueleto con cilindros neumáticos. Estaba viendo Iron Man en ese momento, y mi primer pensamiento fue: <em>¿y si lo construyo yo — pero mejor?</em> Empecé a hacer bocetos en libretas, a aprender sobre neumática, músculos artificiales hidráulicos, actuadores McKibben. No tenía componentes ni taller. Tenía una laptop, internet y un problema que quería resolver.',
+    'about-p2': 'Ese año persiguiendo un proyecto imposible me enseñó más que cualquier currículo. Tomé un curso de electrónica. Aprendí sistemas embebidos. Construí una garra robótica para el proyecto interdisciplinario de la escuela — toda la electrónica encapsulada dentro, placa soldada a mano, mecanismo de cuatro barras. Funcionó en la presentación. Más importante: estuvo dentro del presupuesto.',
+    'about-p3': 'El robot autobalanceado que ganó segundo lugar en la feria de ciencias, el hackathon donde fui el único participante que integró hardware embebido real con testing por IA, las dos iteraciones de una plataforma full-stack que construí en dos años de escuela — cada uno empezó como algo que sonaba casi imposible. Así es como todavía elijo qué construir.',
+    'about-p4': 'Actualmente trabajo en la intersección del desarrollo web, los sistemas embebidos y la automatización. No porque haya planeado una trayectoria profesional, sino porque esas son las herramientas que me permiten construir lo que realmente quiero construir.',
+    'label-stack': 'Stack técnico',
+    'stack-title': 'Herramientas con las que trabajo',
+    'stack-label-fe': 'Frontend',
+    'stack-label-be': 'Backend',
+    'stack-label-embedded': 'Embebido y robótica',
+    'label-contact': 'Contacto',
+    'contact-title': 'Trabajemos juntos.',
+    'contact-desc': 'Si estás construyendo algo que involucra sistemas del mundo real — hardware, software, o ambos — me interesa escucharlo.',
+    'form-name-label': 'Nombre',
+    'form-email-label': 'Correo',
+    'form-msg-label': 'Mensaje',
+    'submit-btn': 'Enviar mensaje',
+    'modal-close-btn': 'Cerrar',
+    'modal-feat-label': 'Características',
+    'modal-impact-label': 'Impacto',
+    'modal-tech-label': 'Tecnologías',
+    'cv-title': 'Descargar CV',
+    'cv-desc': 'Elige tu idioma preferido.',
+    'cv-en': 'Versión en inglés',
+    'cv-es': 'Versión en español',
+    'nav-projects': 'Proyectos',
+    'nav-about': 'Sobre mí',
+    'nav-contact': 'Contacto',
+  }
+};
+
+let locale = 'en';
+
+function setLocale(lang) {
+  locale = lang;
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-es').classList.toggle('active', lang === 'es');
+  const data = t[lang];
+  for (const [id, val] of Object.entries(data)) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = val;
+  }
+}
+
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+function toggleMobileMenu() {
+  const m = document.getElementById('mobile-menu');
+  m.style.display = m.style.display === 'none' ? 'flex' : 'none';
+}
+
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').style.display = 'none';
+}
+
+function openCV() {
+  document.getElementById('cv-overlay').style.display = 'flex';
+}
+
+function closeCV() {
+  document.getElementById('cv-overlay').style.display = 'none';
+}
+
+function openModal(id) {
+  const p = projectData[id];
+  const lang = locale;
+  document.getElementById('modal-tag').textContent = p.tag[lang];
+  document.getElementById('modal-title').textContent = p.title[lang];
+  document.getElementById('modal-desc').textContent = p.desc[lang];
+  document.getElementById('modal-feat-label').textContent = t[lang]['modal-feat-label'];
+  document.getElementById('modal-impact-label').textContent = t[lang]['modal-impact-label'];
+  document.getElementById('modal-tech-label').textContent = t[lang]['modal-tech-label'];
+  document.getElementById('modal-close-btn').textContent = t[lang]['modal-close-btn'];
+  const featEl = document.getElementById('modal-features');
+  featEl.innerHTML = p.features[lang].map(f => `<li>${f}</li>`).join('');
+  const impactSec = document.getElementById('modal-impact-section');
+  if (p.impact && p.impact[lang]) {
+    impactSec.style.display = 'block';
+    document.getElementById('modal-impact').textContent = p.impact[lang];
+  } else {
+    impactSec.style.display = 'none';
+  }
+  const techEl = document.getElementById('modal-tech');
+  techEl.innerHTML = p.tech.map(t2 => `<span class="tech-tag">${t2}</span>`).join('');
+  document.getElementById('modal-overlay').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').style.display = 'none';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeCV(); }
+});
+
+// ── Terminal easter egg ──
+let terminalVisible = false;
+const terminalLogs = [
+  'khymera_core v45.2 initialized.',
+  'embedded link: active',
+  'type "help" for commands'
+];
+
+function toggleTerminal() {
+  terminalVisible = !terminalVisible;
+  const panel = document.getElementById('terminal-panel');
+  panel.classList.toggle('visible', terminalVisible);
+  if (terminalVisible) {
+    const logEl = document.getElementById('terminal-log');
+    logEl.innerHTML = terminalLogs.map(l => `<div class="terminal-log">${l}</div>`).join('');
+    document.getElementById('terminal-input').focus();
+  }
+}
+
+function terminalPush(text) {
+  const ts = new Date().toTimeString().slice(0,8);
+  terminalLogs.unshift(`[${ts}] ${text}`);
+  const logEl = document.getElementById('terminal-log');
+  logEl.innerHTML = terminalLogs.slice(0,8).map(l => `<div class="terminal-log">${l}</div>`).join('');
+}
+
+function terminalSubmit(e) {
+  e.preventDefault();
+  const input = document.getElementById('terminal-input');
+  const cmd = input.value.toLowerCase().trim();
+  if (!cmd) return;
+  input.value = '';
+  if (cmd === 'help') {
+    terminalPush('commands: system, stack, clear');
+  } else if (cmd === 'system') {
+    terminalPush('os: portfolio v2.0 | mode: clean');
+  } else if (cmd === 'stack') {
+    terminalPush('next.js · python · esp32 · c++ · tailwind');
+  } else if (cmd === 'clear' || cmd === 'cls') {
+    terminalLogs.length = 0;
+    document.getElementById('terminal-log').innerHTML = '';
+  } else {
+    terminalPush(`unknown: "${cmd}" — try "help"`);
+  }
+}
+
+// ── Contact form ──
+function sendEmail(e) {
+  e.preventDefault();
+  // EmailJS call — replace with your credentials
+  // emailjs.sendForm('SERVICE_ID', 'TEMPLATE_ID', e.target, 'PUBLIC_KEY')
+  //   .then(() => showToast(locale === 'en' ? 'Message sent!' : '¡Mensaje enviado!', 'success'))
+  //   .catch(() => showToast('Error sending message', 'error'));
+  showToast(locale === 'en' ? 'Message sent!' : '¡Mensaje enviado!', 'success');
+}
+
+function showToast(msg, type) {
+  const t2 = document.getElementById('toast');
+  t2.textContent = msg;
+  t2.className = `toast ${type}`;
+  t2.style.display = 'flex';
+  setTimeout(() => { t2.style.display = 'none'; }, 3000);
+}
+</script>
+</body>
+</html>
